@@ -34,12 +34,17 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    public Order(Long id, Member member, LocalDateTime orderDate, OrderStatus status, List<OrderItem> orderItems) {
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
+
+    public Order(Long id, Member member, LocalDateTime orderDate, OrderStatus status, List<OrderItem> orderItems, Delivery delivery) {
         this.id = id;
         this.member = member;
         this.orderDate = orderDate;
         this.status = status;
         this.orderItems = orderItems;
+        this.delivery = delivery;
     }
 
     public void setMember(Member member) {
@@ -53,5 +58,10 @@ public class Order {
     public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
         orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
     }
 }

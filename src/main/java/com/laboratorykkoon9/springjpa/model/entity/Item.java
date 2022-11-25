@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ITEM")
@@ -23,9 +25,13 @@ public class Item {
     @Column(name = "STOCKQUANTITY")
     private Integer quantity;
 
-    public Item(Long id, Integer price, Integer quantity) {
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<>();
+
+    public Item(Long id, Integer price, Integer quantity, List<Category> categories) {
         this.id = id;
         this.price = price;
         this.quantity = quantity;
+        this.categories = categories;
     }
 }
