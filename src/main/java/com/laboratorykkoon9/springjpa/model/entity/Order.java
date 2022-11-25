@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
@@ -17,8 +19,9 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Column(name = "ORDERDATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -28,10 +31,27 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    public Order(Long id, Long memberId, LocalDateTime orderDate, OrderStatus status) {
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public Order(Long id, Member member, LocalDateTime orderDate, OrderStatus status, List<OrderItem> orderItems) {
         this.id = id;
-        this.memberId = memberId;
+        this.member = member;
         this.orderDate = orderDate;
         this.status = status;
+        this.orderItems = orderItems;
+    }
+
+    public void setMember(Member member) {
+        if (this.member != null) {
+            this.member.getOrders().remove(this);
+        }
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 }
