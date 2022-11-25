@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "DELIVERY")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Delivery {
+public class Delivery extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "DELIVERY_ID")

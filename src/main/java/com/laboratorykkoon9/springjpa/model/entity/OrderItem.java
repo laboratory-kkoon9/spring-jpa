@@ -1,5 +1,6 @@
 package com.laboratorykkoon9.springjpa.model.entity;
 
+import com.laboratorykkoon9.springjpa.model.entity.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "ORDERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderItem {
+public class OrderItem extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "ORDER_ITEM_ID")

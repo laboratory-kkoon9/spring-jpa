@@ -1,5 +1,6 @@
 package com.laboratorykkoon9.springjpa.model.entity;
 
+import com.laboratorykkoon9.springjpa.model.entity.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Table(name = "CATEGORY")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Category {
+public class Category extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "CATEGORY_ID")

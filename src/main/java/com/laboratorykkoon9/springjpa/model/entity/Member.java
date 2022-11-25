@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "MEMBER") // 엔티티 클래스에 매핑할 테이블 정보 이 어노테이션을 생략하면 클래스 이름을 테이블 이름으로 매핑한다. (정확히는 엔티티 이름을 사용)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
     @Id // 엔티티 클래스의 필드를 테이블의 기본 키에 매핑
     @GeneratedValue
     @Column(name = "MEMBER_ID") // 필드를 컬럼에 매핑

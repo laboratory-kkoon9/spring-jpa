@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "ORDERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order {
+public class Order extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "ORDER_ID")
