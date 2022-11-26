@@ -20,25 +20,17 @@ public class Delivery extends BaseEntity {
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    @Column(name = "CITY")
-    private String city;
-
-    @Column(name = "STREET")
-    private String street;
-
-    @Column(name = "ZIPCODE")
-    private String zipcode;
+    @Embedded
+    private Address address;
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
-    public Delivery(Long id, Order order, String city, String street, String zipcode, DeliveryStatus deliveryStatus) {
+    public Delivery(Long id, Order order, Address address, DeliveryStatus deliveryStatus) {
         this.id = id;
         this.order = order;
-        this.city = city;
-        this.street = street;
-        this.zipcode = zipcode;
+        this.address = address;
         this.deliveryStatus = deliveryStatus;
     }
 
