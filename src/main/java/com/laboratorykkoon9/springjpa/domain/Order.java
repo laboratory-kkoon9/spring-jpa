@@ -1,4 +1,4 @@
-package com.laboratorykkoon9.springjpa.model.entity;
+package com.laboratorykkoon9.springjpa.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,14 +23,6 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    @Column(name = "ORDERDATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime orderDate;
-
-    @Column(name = "STATUS")
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -38,13 +30,16 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
-    public Order(Long id, Member member, LocalDateTime orderDate, OrderStatus status, List<OrderItem> orderItems, Delivery delivery) {
+    @Column(name = "STATUS")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    public Order(Long id, Member member, List<OrderItem> orderItems, Delivery delivery, OrderStatus status) {
         this.id = id;
         this.member = member;
-        this.orderDate = orderDate;
-        this.status = status;
         this.orderItems = orderItems;
         this.delivery = delivery;
+        this.status = status;
     }
 
     public void setMember(Member member) {

@@ -1,6 +1,6 @@
-package com.laboratorykkoon9.springjpa.model.entity.item;
+package com.laboratorykkoon9.springjpa.domain.item;
 
-import com.laboratorykkoon9.springjpa.model.entity.Category;
+import com.laboratorykkoon9.springjpa.domain.Category;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

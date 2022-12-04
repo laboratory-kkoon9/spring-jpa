@@ -1,4 +1,4 @@
-package com.laboratorykkoon9.springjpa.model.entity;
+package com.laboratorykkoon9.springjpa.domain;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

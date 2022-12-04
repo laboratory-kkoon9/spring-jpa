@@ -1,4 +1,4 @@
-package com.laboratorykkoon9.springjpa.model.entity.item;
+package com.laboratorykkoon9.springjpa.domain.item;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
