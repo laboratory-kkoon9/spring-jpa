@@ -12,9 +12,11 @@ import java.util.List;
 @DiscriminatorColumn(name = "DTYPE")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@ToString
 public abstract class Item {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ITEM_ID")
     private Long id;
 
@@ -28,15 +30,6 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
-
-    @Builder
-    public Item(Long id, String name, Integer price, Integer quantity, List<Category> categories) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.categories = categories;
-    }
 
     public void addStock(int quantity) {
         this.quantity += quantity;

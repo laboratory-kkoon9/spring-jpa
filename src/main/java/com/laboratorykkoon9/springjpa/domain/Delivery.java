@@ -1,8 +1,6 @@
 package com.laboratorykkoon9.springjpa.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,9 +8,10 @@ import javax.persistence.*;
 @Table(name = "DELIVERY")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class Delivery extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DELIVERY_ID")
     private Long id;
 
@@ -27,6 +26,7 @@ public class Delivery extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 
+    @Builder
     public Delivery(Long id, Order order, Address address, DeliveryStatus deliveryStatus) {
         this.id = id;
         this.order = order;

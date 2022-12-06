@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "ORDERS")
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ID")
     private Long id;
 
@@ -33,6 +32,8 @@ public class Order extends BaseEntity {
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    private Date orderDate;
 
     public Order(Long id, Member member, List<OrderItem> orderItems, Delivery delivery, OrderStatus status) {
         this.id = id;
@@ -58,5 +59,39 @@ public class Order extends BaseEntity {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+
+        order.status = OrderStatus.ORDER;
+        order.orderDate = new Date();
+
+        return order;
+    }
+
+    public void cancel() {
+        if (delivery.getDeliveryStatus() == DeliveryStatus.COMP) {
+            throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+
+        this.status = OrderStatus.CANCEL;
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getTotalPrice();
+        }
+
+        return totalPrice;
     }
 }

@@ -1,9 +1,7 @@
 package com.laboratorykkoon9.springjpa.domain;
 
 import com.laboratorykkoon9.springjpa.domain.item.Item;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,9 +9,10 @@ import javax.persistence.*;
 @Table(name = "ORDERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class OrderItem extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ITEM_ID")
     private Long id;
 
@@ -41,5 +40,27 @@ public class OrderItem extends BaseEntity {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.orderPrice = orderPrice;
+        orderItem.count = count;
+
+        item.removeStock(count);
+        return orderItem;
+    }
+
+    public void cancel() {
+        getItem().addStock(count);
+    }
+
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
     }
 }
