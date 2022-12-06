@@ -1,8 +1,6 @@
 package com.laboratorykkoon9.springjpa.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
+    @Builder
     public Member(Long id, String name, Address address, List<Order> orders) {
         this.id = id;
         this.name = name;
